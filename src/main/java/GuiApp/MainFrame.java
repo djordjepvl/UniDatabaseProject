@@ -1,4 +1,4 @@
-package org.example;
+package GuiApp;
 
 import javax.swing.*;
 
