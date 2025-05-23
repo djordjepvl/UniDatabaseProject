@@ -101,7 +101,8 @@ public class LoginFrame extends JFrame {
             return;
         }
 
-        new ProfileFrame(p).setVisible(true);
+
+        new MainFrame(p).setVisible(true);
         setVisible(false);
     }
 }

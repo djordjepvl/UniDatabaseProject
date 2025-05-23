@@ -4,7 +4,7 @@ import model.Psihoterapeut;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class DBConnection {
 
@@ -23,6 +23,7 @@ public class DBConnection {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                int id = rs.getInt("psihoterapeut_id");
                 String ime = rs.getString("ime");
                 String prezime = rs.getString("prezime");
                 String jmbg = rs.getString("JMBG");
@@ -36,7 +37,7 @@ public class DBConnection {
                 int oblastPsih = rs.getInt("p_oblast_id");
 
                 Psihoterapeut p = new Psihoterapeut(
-                        ime, prezime, jmbg, datumRodjenja, prebivaliste,
+                        id, ime, prezime, jmbg, datumRodjenja, prebivaliste,
                         imejlAdresa, brojTelefona, stepenStudija,
                         datumSertifikacije, fakultetID, oblastPsih
                 );
@@ -60,6 +61,7 @@ public class DBConnection {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                int id = rs.getInt("psihoterapeut_id");
                 String ime = rs.getString("ime");
                 String prezime = rs.getString("prezime");
                 String jmbg = rs.getString("JMBG");
@@ -73,7 +75,7 @@ public class DBConnection {
                 int oblastPsih = rs.getInt("p_oblast_id");
 
                 Psihoterapeut p = new Psihoterapeut(
-                        ime, prezime, jmbg, datumRodjenja, prebivaliste,
+                        id, ime, prezime, jmbg, datumRodjenja, prebivaliste,
                         imejlAdresa, brojTelefona, stepenStudija,
                         datumSertifikacije, fakultetID, oblastPsih
                 );
@@ -125,7 +127,48 @@ public class DBConnection {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Poželjno je koristiti logovanje u stvarnim aplikacijama
+            e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Psihoterapeut> psihoterapeuti(Connection conn) {
+        ArrayList<Psihoterapeut> lista = new ArrayList<>();
+        String sql = "SELECT * FROM psihoterapeut";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("psihoterapeut_id");
+                String ime = rs.getString("ime");
+                String prezime = rs.getString("prezime");
+                String jmbg = rs.getString("JMBG");
+                LocalDate datumRodjenja = rs.getDate("datum_rodjenja").toLocalDate();
+                String prebivaliste = rs.getString("prebivaliste");
+                String imejlAdresa = rs.getString("imejl_adresa");
+                String brojTelefona = rs.getString("broj_telefona");
+                String stepenStudija = rs.getString("stepen_studija");
+                LocalDate datumSertifikacije = rs.getDate("datum_sertifikacije").toLocalDate();
+                int fakultetID = rs.getInt("fakultet_id");
+                int oblastPsih = rs.getInt("p_oblast_id");
+                String username = rs.getString("username");
+                String lozinka = rs.getString("lozinka");
+
+                Psihoterapeut p = new Psihoterapeut(
+                        id, ime, prezime, jmbg, datumRodjenja, prebivaliste,
+                        imejlAdresa, brojTelefona, stepenStudija,
+                        datumSertifikacije, fakultetID, oblastPsih
+                );
+                p.setUsername(username);
+                p.setLozinka(lozinka);
+
+                lista.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 }

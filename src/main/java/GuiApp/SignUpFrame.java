@@ -127,7 +127,7 @@ public class SignUpFrame extends JFrame {
 
             DBConnection.updateUser(con, p);
 
-            new ProfileFrame(p).setVisible(true);
+            new MainFrame(p).setVisible(true);
             setVisible(false);
         } catch (SQLException e) {
             e.printStackTrace();

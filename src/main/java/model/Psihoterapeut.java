@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Psihoterapeut {
+    private int id;
     private String ime;
     private String prezime;
     private String JMBG;
@@ -19,7 +20,8 @@ public class Psihoterapeut {
     private String lozinka;
 
 
-    public Psihoterapeut(String ime, String prezime, String JMBG, LocalDate datumRodjenja, String prebivaliste, String email, String brojTelefona, String stepenStudija, LocalDate datumSertifikacije, int fakultetID, int oblastPsih) {
+    public Psihoterapeut(int id, String ime, String prezime, String JMBG, LocalDate datumRodjenja, String prebivaliste, String email, String brojTelefona, String stepenStudija, LocalDate datumSertifikacije, int fakultetID, int oblastPsih) {
+        this.id = id;
         this.ime = ime;
         this.prezime = prezime;
         this.JMBG = JMBG;
@@ -31,6 +33,10 @@ public class Psihoterapeut {
         this.datumSertifikacije = datumSertifikacije;
         this.fakultetID = fakultetID;
         this.oblastPsih = oblastPsih;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getIme() {
@@ -83,6 +89,10 @@ public class Psihoterapeut {
 
     public String getLozinka() {
         return lozinka;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setLozinka(String lozinka) {
