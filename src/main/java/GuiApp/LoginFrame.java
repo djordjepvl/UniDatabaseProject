@@ -1,8 +1,12 @@
 package GuiApp;
 
+import model.Psihoterapeut;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class LoginFrame extends JFrame {
     public LoginFrame() {
@@ -74,7 +78,30 @@ public class LoginFrame extends JFrame {
             setVisible(false);
         });
 
+        loginButton.addActionListener(e -> {
+            String username = userField.getText();
+            String password = new String(passField.getPassword());
+            try {
+                login(username, password);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
         add(mainPanel);
         setVisible(true);
+    }
+
+    private void login(String username, String password) throws SQLException {
+        Connection con = DBConnection.getConnection();
+        Psihoterapeut p = DBConnection.psihoterapeutUsernamePassword(con, username, password);
+
+        if (p==null) {
+            System.out.println("Pogresne informacije!");
+            return;
+        }
+
+        new ProfileFrame(p).setVisible(true);
+        setVisible(false);
     }
 }

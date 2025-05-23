@@ -1,5 +1,7 @@
 package GuiApp;
 
+import model.Psihoterapeut;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -98,7 +100,7 @@ public class SignUpFrame extends JFrame {
 
         loginButton.addActionListener(e -> {
             new LoginFrame(); // Open login window
-            dispose(); // Close sign-up window
+            setVisible(false);
         });
 
         add(mainPanel);
@@ -107,35 +109,29 @@ public class SignUpFrame extends JFrame {
     private void signUp(String email, String username, String password) throws SQLException {
 
         try {
-            String select = DBConnection.psihoterapeutMail();
             Connection con = DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement(select);
-            pstmt.setString(1, email);
+            Psihoterapeut p = DBConnection.psihoterapeutMail(con, email);
 
-            ResultSet rs = pstmt.executeQuery();
-
-            if (!rs.next()) {
+            if (p == null) {
                 System.out.println("Nema psihoterapeuta sa ovom mejl adresom");
                 return;
             }
 
-            if (rs.getString("username")!=null || rs.getString("lozinka")!=null) {
+            if (p.getLozinka()!=null || p.getUsername()!=null) {
                 System.out.println("Psihoterapeut vec ima nalog!");
                 return;
             }
 
+            p.setUsername(username);
+            p.setLozinka(password);
 
+            DBConnection.updateUser(con, p);
 
-            // You would insert into database here.
-            JOptionPane.showMessageDialog(this,
-                    "Account created for " + username + " (email: " + email + ")",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+            new ProfileFrame(p).setVisible(true);
+            setVisible(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
 
     }
 }
