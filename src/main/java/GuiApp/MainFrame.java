@@ -11,6 +11,7 @@ public class MainFrame extends JFrame {
 
     private static ProfileFrame profileFrame;
     private static PsihoterapeutiFrame psihoterapeutiFrame;
+    private static PrevSessionsFrame prevSessionsFrame;
 
     public MainFrame(Psihoterapeut user) {
         this.user = user;
@@ -56,6 +57,15 @@ public class MainFrame extends JFrame {
             psihoterapeutiFrame.setVisible(true);
         });
         gbc.gridx = 1;
+        mainPanel.add(pregledButton, gbc);
+
+        JButton prevSessionButton = new JButton("Prethodne seanse");
+        styleButton(prevSessionButton);
+        prevSessionButton.addActionListener(e -> {
+            prevSessionsFrame = new PrevSessionsFrame(user, DBConnection.prethodneSeansePsihoterapeuta(user));
+            prevSessionsFrame.setVisible(true);
+        });
+        gbc.gridx = 2;
         mainPanel.add(pregledButton, gbc);
 
         // Dodaj panel u prozor
