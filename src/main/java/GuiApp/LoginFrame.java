@@ -8,10 +8,9 @@ public class LoginFrame extends JFrame {
     public LoginFrame() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 250);
+        setSize(400, 320);
         setLocationRelativeTo(null); // Center the frame
 
-        // Main panel with padding
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
         mainPanel.setBackground(Color.WHITE);
@@ -60,7 +59,22 @@ public class LoginFrame extends JFrame {
         gbc.gridwidth = 2;
         mainPanel.add(loginButton, gbc);
 
+        // Create new account button
+        JButton createButton = new JButton("Create New Account");
+        createButton.setFocusPainted(false);
+        createButton.setBackground(new Color(34, 139, 34));
+        createButton.setForeground(Color.WHITE);
+        createButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        gbc.gridy = 4;
+        mainPanel.add(createButton, gbc);
+
+        // Open SignUpFrame on click
+        createButton.addActionListener(e -> {
+            App.signUp.setVisible(true);
+            setVisible(false);
+        });
 
         add(mainPanel);
+        setVisible(true);
     }
 }
