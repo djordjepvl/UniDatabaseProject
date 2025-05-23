@@ -11,11 +11,11 @@ public class Seansa {
     private int cenaSeanseDin;
     private LocalDate datumPromeneCene;
     private int kandidatId;
-    private int psihoterapeutId;
-    private int klijentId;
+    private Psihoterapeut psihoterapeut;
+    private Klijent klijent;
     private int centarId;
 
-    public Seansa(int id, int trajanjeMinuti, LocalDateTime pocetak, String beleske, int cenaSeanseDin, LocalDate datumPromeneCene, int kandidatId, int psihoterapeutId, int klijentId, int centarId) {
+    public Seansa(int id, int trajanjeMinuti, LocalDateTime pocetak, String beleske, int cenaSeanseDin, LocalDate datumPromeneCene, int kandidatId, Psihoterapeut psihoterapeut, Klijent klijent, int centarId) {
         this.id = id;
         this.trajanjeMinuti = trajanjeMinuti;
         this.pocetak = pocetak;
@@ -23,9 +23,20 @@ public class Seansa {
         this.cenaSeanseDin = cenaSeanseDin;
         this.datumPromeneCene = datumPromeneCene;
         this.kandidatId = kandidatId;
-        this.psihoterapeutId = psihoterapeutId;
-        this.klijentId = klijentId;
+        this.psihoterapeut = psihoterapeut;
+        this.klijent = klijent;
         this.centarId = centarId;
+    }
+
+    public Seansa(int id, int trajanjeMinuti, LocalDateTime pocetak, String beleske, int cenaSeanseDin, LocalDate datumPromeneCene, Klijent klijent, Psihoterapeut psihoterapeut) {
+        this.id = id;
+        this.trajanjeMinuti = trajanjeMinuti;
+        this.pocetak = pocetak;
+        this.beleske = beleske;
+        this.cenaSeanseDin = cenaSeanseDin;
+        this.datumPromeneCene = datumPromeneCene;
+        this.klijent = klijent;
+        this.psihoterapeut = psihoterapeut;
     }
 
     public int getId() {
@@ -84,20 +95,20 @@ public class Seansa {
         this.kandidatId = kandidatId;
     }
 
-    public int getPsihoterapeutId() {
-        return psihoterapeutId;
+    public Psihoterapeut getPsihoterapeut() {
+        return psihoterapeut;
     }
 
-    public void setPsihoterapeutId(int psihoterapeutId) {
-        this.psihoterapeutId = psihoterapeutId;
+    public void setPsihoterapeutId(Psihoterapeut psihoterapeutId) {
+        this.psihoterapeut = psihoterapeut;
     }
 
-    public int getKlijentId() {
-        return klijentId;
+    public Klijent getKlijent() {
+        return klijent;
     }
 
-    public void setKlijentId(int klijentId) {
-        this.klijentId = klijentId;
+    public void setKlijent(Klijent klijentId) {
+        this.klijent = klijentId;
     }
 
     public int getCentarId() {

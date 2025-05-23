@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
 
         setTitle("Glavni meni");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(1000, 300);
         setLocationRelativeTo(null); // centriraj prozor
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -66,7 +66,16 @@ public class MainFrame extends JFrame {
             prevSessionsFrame.setVisible(true);
         });
         gbc.gridx = 2;
-        mainPanel.add(pregledButton, gbc);
+        mainPanel.add(prevSessionButton, gbc);
+
+        JButton futureSessionButton = new JButton("Buduće seanse");
+        styleButton(futureSessionButton);
+        futureSessionButton.addActionListener(e -> {
+            FutureSessionsFrame futureFrame = new FutureSessionsFrame();
+            futureFrame.setVisible(true);
+        });
+        gbc.gridx = 3;
+        mainPanel.add(futureSessionButton, gbc);
 
         // Dodaj panel u prozor
         add(mainPanel);

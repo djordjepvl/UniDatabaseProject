@@ -1,10 +1,8 @@
 package GuiApp;
 
-import model.Kandidat;
-import model.Klijent;
-import model.Psihoterapeut;
-import model.Seansa;
+import model.*;
 
+import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -183,6 +181,7 @@ public class DBConnection {
         String sql = "SELECT * FROM seansa " +
                 "WHERE psihoterapeut_id = ? " +
                 "AND beleske IS NOT NULL " +
+                "AND pocetak < NOW() " +
                 "ORDER BY pocetak DESC";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -190,7 +189,7 @@ public class DBConnection {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("seansa_id");
+                int seansaId = rs.getInt("seansa_id");
                 int trajanjeMinuti = rs.getInt("trajanje_minuti");
                 LocalDateTime pocetak = rs.getTimestamp("pocetak").toLocalDateTime();
                 String beleske = rs.getString("beleske");
@@ -199,15 +198,17 @@ public class DBConnection {
                 if (rs.getDate("datum_promene_cene") != null) {
                     datumPromeneCene = rs.getDate("datum_promene_cene").toLocalDate();
                 }
-                // kandidat_id is now included regardless of null/not null
+
                 int kandidatId = rs.getInt("kandidat_id");
-                int klijentId = rs.getInt("klijent_id");
+
+                int klijentIdFromDb = rs.getInt("klijent_id");
+                Klijent klijent = getKlijentById(conn, klijentIdFromDb);
+
                 int centarId = rs.getInt("centar_id");
 
                 Seansa seansa = new Seansa(
-                        id, trajanjeMinuti, pocetak, beleske, cenaSeanseDin,
-                        datumPromeneCene, kandidatId, psihoterapeut.getId(),
-                        klijentId, centarId
+                        seansaId, trajanjeMinuti, pocetak, beleske, cenaSeanseDin,
+                        datumPromeneCene, kandidatId, psihoterapeut, klijent, centarId
                 );
                 sessions.add(seansa);
             }
@@ -216,6 +217,34 @@ public class DBConnection {
         }
         return sessions;
     }
+
+    public static Klijent getKlijentById(Connection conn, int klijentId) {
+        String sql = "SELECT * FROM klijent WHERE klijent_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, klijentId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String ime = rs.getString("ime");
+                String prezime = rs.getString("prezime");
+                LocalDate datum = rs.getDate("datum_rodjenja").toLocalDate();
+                String pol = rs.getString("pol");
+                String email = rs.getString("imejl_adresa");
+                String telefon = rs.getString("broj_telefona");
+                String opisProblema = rs.getString("opis_problema");
+                String status = rs.getString("status");
+                int prijavaId = rs.getInt("prijava_id");
+
+                return new Klijent(klijentId, ime, prezime, datum, pol, email, telefon, opisProblema, status, prijavaId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
     public static ArrayList<Seansa> buduceSeansePsihoterapeuta(Psihoterapeut psihoterapeut) {
         ArrayList<Seansa> sessions = new ArrayList<>();
@@ -242,11 +271,12 @@ public class DBConnection {
                 int kandidatId = rs.getInt("kandidat_id");
                 int klijentId = rs.getInt("klijent_id");
                 int centarId = rs.getInt("centar_id");
+                Klijent klijent = getKlijentById(conn, klijentId);
 
                 Seansa seansa = new Seansa(
                         id, trajanjeMinuti, pocetak, beleske, cenaSeanseDin,
-                        datumPromeneCene, kandidatId, psihoterapeut.getId(),
-                        klijentId, centarId
+                        datumPromeneCene,
+                        klijent, MainFrame.getUser()
                 );
                 sessions.add(seansa);
             }
@@ -256,11 +286,71 @@ public class DBConnection {
         return sessions;
     }
 
-    public static Klijent klijentSeanse (Seansa s) {
+    public static ObjavaSeanse selectObjavaSeanse(Seansa seansa) {
+        String sql = "SELECT objava_id, kome_objavljeno, datum_objave, sadrzaj " +
+                "FROM objava_seanse WHERE seansa_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, seansa.getId());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("objava_id");
+                    String komeObjavljeno = rs.getString("kome_objavljeno");
+                    LocalDate datum = rs.getDate("datum_objave").toLocalDate();
+                    String sadrzaj = rs.getString("sadrzaj");
+
+                    return new ObjavaSeanse(id, komeObjavljeno, datum, sadrzaj, seansa);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Greška prilikom dohvatanja objave seanse:");
+            e.printStackTrace();
+        }
+
         return null;
     }
 
-    public static Kandidat kandidatSeanse (Seansa s) {
+    public static ObjavaSeanse insertObjava(Seansa s, LocalDate datum, JTextField tfKome, JTextField tfZasto) {
+        int noviId = getNextObjavaId();
+        String sql = "INSERT INTO objava_seanse (objava_id, seansa_id, datum_objave, kome_objavljeno, sadrzaj) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, noviId);
+            stmt.setInt(2, s.getId());
+            stmt.setDate(3, java.sql.Date.valueOf(datum));
+            stmt.setString(4, tfKome.getText());
+            stmt.setString(5, tfZasto.getText());
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Inserting objava failed, no rows affected.");
+            }
+
+            return new ObjavaSeanse(noviId, tfKome.getText(), datum, tfZasto.getText(), s);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
+    }
+
+    public static int getNextObjavaId() {
+        String sql = "SELECT MAX(objava_id) AS max_id FROM objava_seanse";
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                int maxId = rs.getInt("max_id");
+                return maxId + 1;  // vraća sledeći slobodan ID
+            } else {
+                return 1;  // ako nema unosa, počni od 1
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;  // ili baci izuzetak po želji ako nešto nije u redu
     }
 }
