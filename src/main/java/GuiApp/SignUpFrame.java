@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SignUpFrame extends JFrame {
@@ -105,8 +107,23 @@ public class SignUpFrame extends JFrame {
     private void signUp(String email, String username, String password) throws SQLException {
 
         try {
-            String upit = DBConnection.upit1();
+            String select = DBConnection.psihoterapeutMail();
             Connection con = DBConnection.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(select);
+            pstmt.setString(1, email);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Nema psihoterapeuta sa ovom mejl adresom");
+                return;
+            }
+
+            if (rs.getString("username")!=null || rs.getString("lozinka")!=null) {
+                System.out.println("Psihoterapeut vec ima nalog!");
+                return;
+            }
+
 
 
             // You would insert into database here.

@@ -14,7 +14,7 @@ public class DBConnection {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 
-    public static String upit1() {
+    public static String psihoterapeutMail() {
         String s = "SELECT psihoterapeut_id, username, ime, prezime " +
                 "FROM psihoterapeut " +
                 "WHERE imejl_adresa = ?";
