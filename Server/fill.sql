@@ -364,64 +364,64 @@ INSERT INTO rezultat_testa (rezultat_id, opis_rezultata, seansa_id, test_id) VAL
 
 INSERT INTO objava_seanse (objava_id, kome_objavljeno, datum_objave, sadrzaj, seansa_id) VALUES
 -- Psihoterapeut ID 1 (Completed Sessions)
-(1, 'Psihoterapeut, Klijent', '2024-09-10', 'Beleške sa seanse: Klijent je izrazio početne ciljeve i očekivanja od terapije, fokusirajući se na smanjenje stresa.', 1),
-(2, 'Psihoterapeut, Klijent, Kandidat', '2024-10-05', 'Beleške sa seanse: Detaljno istraženi uticaji detinjstva na trenutno ponašanje klijenta, sa supervizijom kandidata.', 2),
-(3, 'Psihoterapeut, Klijent', '2025-01-20', 'Beleške sa seanse: Fokus na tehnikama svesnosti za upravljanje anksioznošću. Klijent je pokazao napredak.', 3),
-(4, 'Psihoterapeut, Klijent', '2025-03-15', 'Beleške sa seanse: Pregledan napredak u socijalnim interakcijama. Klijent se oseća sigurnije.', 4),
+(1, 'Psihoterapeut', '2024-09-10', 'Beleške sa seanse: Klijent je izrazio početne ciljeve i očekivanja od terapije, fokusirajući se na smanjenje stresa.', 1),
+-- (2, 'Psihoterapeut, Kandidat', '2024-10-05', NULL, 2), -- REMOVED: objava_id 2, seansa_id 2 (No log)
+(3, 'Psihoterapeut', '2025-01-20', 'Beleške sa seanse: Fokus na tehnikama svesnosti za upravljanje anksioznošću. Klijent je pokazao napredak.', 3),
+(4, 'Psihoterapeut', '2025-03-15', 'Beleške sa seanse: Pregledan napredak u socijalnim interakcijama. Klijent se oseća sigurnije.', 4),
 
 -- Psihoterapeut ID 2 (Completed Sessions)
-(5, 'Psihoterapeut, Klijent', '2024-07-22', 'Beleške sa seanse: Klijent je predstavio probleme vezane za stres na poslu i pritisak.', 8),
-(6, 'Psihoterapeut, Klijent, Kandidat', '2024-08-28', 'Beleške sa seanse: Razvijene strategije suočavanja sa izazovima na radnom mestu, uz prisustvo kandidata.', 9),
-(7, 'Psihoterapeut, Klijent', '2025-02-10', 'Beleške sa seanse: Diskutovane granice sa kolegama i važnost postavljanja istih.', 10),
-(8, 'Psihoterapeut, Klijent', '2025-04-18', 'Beleške sa seanse: Vežbanje teških razgovora kroz igru uloga. Klijent se oseća spremnijim.', 11),
+(5, 'Psihoterapeut', '2024-07-22', 'Beleške sa seanse: Klijent je predstavio probleme vezane za stres na poslu i pritisak.', 8),
+(6, 'Psihoterapeut, Kandidat', '2024-08-28', 'Beleške sa seanse: Razvijene strategije suočavanja sa izazovima na radnom mestu, uz prisustvo kandidata.', 9),
+-- (7, 'Psihoterapeut', '2025-02-10', NULL, 10), -- REMOVED: objava_id 7, seansa_id 10 (No log)
+(8, 'Psihoterapeut', '2025-04-18', 'Beleške sa seanse: Vežbanje teških razgovora kroz igru uloga. Klijent se oseća spremnijim.', 11),
 
 -- Psihoterapeut ID 3 (Completed Sessions)
-(9, 'Psihoterapeut, Klijent', '2024-06-01', 'Beleške sa seanse: Početna seansa, klijent se javio zbog problema sa tugom i gubitkom.', 15),
-(10, 'Psihoterapeut, Klijent, Kandidat', '2024-07-05', 'Beleške sa seanse: Fokus na procesuiranju osećanja gubitka, sa supervizijom kandidata.', 16),
-(11, 'Psihoterapeut, Klijent', '2025-03-01', 'Beleške sa seanse: Klijent je prijavio napredak u prihvatanju situacije.', 17),
-(12, 'Psihoterapeut, Klijent', '2025-05-10', 'Beleške sa seanse: Priprema za strategije upravljanja okidačima stresa.', 18),
+(9, 'Psihoterapeut', '2024-06-01', 'Beleške sa seanse: Početna seansa, klijent se javio zbog problema sa tugom i gubitkom.', 15),
+(10, 'Psihoterapeut, Kandidat', '2024-07-05', 'Beleške sa seanse: Fokus na procesuiranju osećanja gubitka, sa supervizijom kandidata.', 16),
+(11, 'Psihoterapeut', '2025-03-01', 'Beleške sa seanse: Klijent je prijavio napredak u prihvatanju situacije.', 17),
+-- (12, 'Psihoterapeut', '2025-05-10', NULL, 18), -- REMOVED: objava_id 12, seansa_id 18 (No log)
 
 -- Psihoterapeut ID 4 (Completed Sessions)
-(13, 'Psihoterapeut, Klijent', '2024-09-10', 'Beleške sa seanse: Detaljno istražena porodična dinamika i odnosi.', 21),
-(14, 'Psihoterapeut, Klijent, Kandidat', '2024-10-15', 'Beleške sa seanse: Izvedena vežba porodične komunikacije, uz prisustvo kandidata.', 22),
-(15, 'Psihoterapeut, Klijent', '2025-01-05', 'Beleške sa seanse: Prijavljena poboljšanja u porodičnim interakcijama.', 23),
-(16, 'Psihoterapeut, Klijent', '2025-03-20', 'Beleške sa seanse: Postavljeni dugoročni porodični ciljevi za buduće seanse.', 24),
-(17, 'Psihoterapeut, Klijent, Policija', '2025-04-25', 'Beleške sa seanse: Diskutovane strategije rešavanja konflikata. Podaci objavljeni policiji zbog priznanja krivičnog dela.', 25),
+(13, 'Psihoterapeut', '2024-09-10', 'Beleške sa seanse: Detaljno istražena porodična dinamika i odnosi.', 21),
+(14, 'Psihoterapeut, Kandidat', '2024-10-15', 'Beleške sa seanse: Izvedena vežba porodične komunikacije, uz prisustvo kandidata.', 22),
+-- (15, 'Psihoterapeut', '2025-01-05', NULL, 23), -- REMOVED: objava_id 15, seansa_id 23 (No log)
+(16, 'Psihoterapeut', '2025-03-20', 'Beleške sa seanse: Postavljeni dugoročni porodični ciljevi za buduće seanse.', 24),
+(17, 'Psihoterapeut, Sud', '2025-04-25', 'Beleške sa seanse: Diskutovane strategije rešavanja konflikata. Podaci objavljeni policiji zbog priznanja krivičnog dela.', 25),
 
 -- Psihoterapeut ID 5 (Completed Sessions)
-(18, 'Psihoterapeut, Klijent', '2024-07-01', 'Beleške sa seanse: Klijent je istraživao kreativno izražavanje kroz art terapiju.', 29),
-(19, 'Psihoterapeut, Klijent, Kandidat', '2024-08-08', 'Beleške sa seanse: Analizovana simbolika u klijentovim crtežima, sa supervizijom kandidata.', 30),
-(20, 'Psihoterapeut, Klijent', '2025-01-15', 'Beleške sa seanse: Klijent je podelio proboje u samorazumevanju.', 31),
-(21, 'Psihoterapeut, Klijent', '2025-04-01', 'Beleške sa seanse: Fokus na integrisanju kreativnih uvida u svakodnevni život.', 32),
+(18, 'Psihoterapeut', '2024-07-01', 'Beleške sa seanse: Klijent je istraživao kreativno izražavanje kroz art terapiju.', 29),
+(19, 'Psihoterapeut, Kandidat', '2024-08-08', 'Beleške sa seanse: Analizovana simbolika u klijentovim crtežima, sa supervizijom kandidata.', 30),
+(20, 'Psihoterapeut', '2025-01-15', 'Beleške sa seanse: Klijent je podelio proboje u samorazumevanju.', 31),
+-- (21, 'Psihoterapeut', '2025-04-01', NULL, 32), -- REMOVED: objava_id 21, seansa_id 32 (No log)
 
 -- Psihoterapeut ID 6 (Completed Sessions)
-(22, 'Psihoterapeut, Klijent', '2024-08-20', 'Beleške sa seanse: Klijent je započeo diskusiju o svrsi života.', 37),
-(23, 'Psihoterapeut, Klijent, Kandidat', '2024-09-25', 'Beleške sa seanse: Istražene lične vrednosti i aspiracije, uz prisustvo kandidata.', 38),
-(24, 'Psihoterapeut, Klijent', '2025-02-20', 'Beleške sa seanse: Klijent je razvio jasniji osećaj smera.', 39),
-(25, 'Psihoterapeut, Klijent, Policija', '2025-05-15', 'Beleške sa seanse: Pripremljena izjava o ličnoj misiji. Podaci objavljeni policiji zbog priznanja krivičnog dela.', 40),
+(22, 'Psihoterapeut', '2024-08-20', 'Beleške sa seanse: Klijent je započeo diskusiju o svrsi života.', 37),
+(23, 'Psihoterapeut, Kandidat', '2024-09-25', 'Beleške sa seanse: Istražene lične vrednosti i aspiracije, uz prisustvo kandidata.', 38),
+(24, 'Psihoterapeut', '2025-02-20', 'Beleške sa seanse: Klijent je razvio jasniji osećaj smera.', 39),
+(25, 'Psihoterapeut, Sud', '2025-05-15', 'Beleške sa seanse: Pripremljena izjava o ličnoj misiji. Podaci objavljeni policiji zbog priznanja krivičnog dela.', 40),
 
 -- Psihoterapeut ID 7 (Completed Sessions)
-(26, 'Psihoterapeut, Klijent', '2024-07-10', 'Beleške sa seanse: Klijent je diskutovao egzistencijalna pitanja i anksioznosti.', 43),
-(27, 'Psihoterapeut, Klijent, Kandidat', '2024-08-01', 'Beleške sa seanse: Istraženi koncepti slobode i odgovornosti, sa supervizijom kandidata.', 44),
-(28, 'Psihoterapeut, Klijent', '2025-03-05', 'Beleške sa seanse: Klijent je prijavio da se oseća autentičnije u svakodnevnom životu.', 45),
-(29, 'Psihoterapeut, Klijent', '2025-04-20', 'Beleške sa seanse: Fokus na pronalaženju smisla u izazovnim situacijama.', 46),
-(30, 'Psihoterapeut, Klijent', '2025-05-20', 'Beleške sa seanse: Diskutovana nedavna etička dilema.', 47),
+(26, 'Psihoterapeut', '2024-07-10', 'Beleške sa seanse: Klijent je diskutovao egzistencijalna pitanja i anksioznosti.', 43),
+-- (27, 'Psihoterapeut, Kandidat', '2024-08-01', NULL, 44), -- REMOVED: objava_id 27, seansa_id 44 (No log)
+(28, 'Psihoterapeut', '2025-03-05', 'Beleške sa seanse: Klijent je prijavio da se oseća autentičnije u svakodnevnom životu.', 45),
+(29, 'Psihoterapeut', '2025-04-20', 'Beleške sa seanse: Fokus na pronalaženju smisla u izazovnim situacijama.', 46),
+(30, 'Psihoterapeut', '2025-05-20', 'Beleške sa seanse: Diskutovana nedavna etička dilema.', 47),
 
 -- Psihoterapeut ID 8 (Completed Sessions)
-(31, 'Psihoterapeut, Klijent', '2024-09-05', 'Beleške sa seanse: Klijent je diskutovao obrasce i dinamiku odnosa.', 51),
-(32, 'Psihoterapeut, Klijent, Kandidat', '2024-10-01', 'Beleške sa seanse: Fokus na razvijanju zdravijih komunikacionih veština, uz prisustvo kandidata.', 52),
-(33, 'Psihoterapeut, Klijent', '2025-01-25', 'Beleške sa seanse: Klijent je prijavio poboljšane interakcije sa porodicom.', 53),
-(34, 'Psihoterapeut, Klijent', '2025-03-10', 'Beleške sa seanse: Postavljeni budući ciljevi u vezi sa odnosima za dugoročni rast.', 54),
+(31, 'Psihoterapeut', '2024-09-05', 'Beleške sa seanse: Klijent je diskutovao obrasce i dinamiku odnosa.', 51),
+(32, 'Psihoterapeut, Kandidat', '2024-10-01', 'Beleške sa seanse: Fokus na razvijanju zdravijih komunikacionih veština, uz prisustvo kandidata.', 52),
+-- (33, 'Psihoterapeut', '2025-01-25', NULL, 53), -- REMOVED: objava_id 33, seansa_id 53 (No log)
+(34, 'Psihoterapeut', '2025-03-10', 'Beleške sa seanse: Postavljeni budući ciljevi u vezi sa odnosima za dugoročni rast.', 54),
 
 -- Psihoterapeut ID 9 (Completed Sessions)
-(35, 'Psihoterapeut, Klijent', '2024-07-15', 'Beleške sa seanse: Klijent je istraživao prošle traume i njihov uticaj.', 58),
-(36, 'Psihoterapeut, Klijent, Kandidat', '2024-08-10', 'Beleške sa seanse: Procesuirane teške uspomene korišćenjem vođene imaginacije, sa supervizijom kandidata.', 59),
-(37, 'Psihoterapeut, Klijent', '2025-02-01', 'Beleške sa seanse: Klijent je osetio osećaj oslobođenja i otpornosti.', 60),
-(38, 'Psihoterapeut, Klijent', '2025-04-05', 'Beleške sa seanse: Razvijene nove strategije suočavanja sa okidačima.', 61),
-(39, 'Psihoterapeut, Klijent, Policija', '2025-05-02', 'Beleške sa seanse: Pregledan napredak u emocionalnoj regulaciji. Podaci objavljeni policiji zbog priznanja krivičnog dela.', 62),
+(35, 'Psihoterapeut', '2024-07-15', 'Beleške sa seanse: Klijent je istraživao prošle traume i njihov uticaj.', 58),
+(36, 'Psihoterapeut, Kandidat', '2024-08-10', 'Beleške sa seanse: Procesuirane teške uspomene korišćenjem vođene imaginacije, sa supervizijom kandidata.', 59),
+(37, 'Psihoterapeut', '2025-02-01', 'Beleške sa seanse: Klijent je osetio osećaj oslobođenja i otpornosti.', 60),
+(38, 'Psihoterapeut', '2025-04-05', 'Beleške sa seanse: Razvijene nove strategije suočavanja sa okidačima.', 61),
+(39, 'Psihoterapeut, Sud', '2025-05-02', 'Beleške sa seanse: Pregledan napredak u emocionalnoj regulaciji. Podaci objavljeni policiji zbog priznanja krivičnog dela.', 62),
 
 -- Psihoterapeut ID 10 (Completed Sessions)
-(40, 'Psihoterapeut, Klijent', '2024-08-05', 'Beleške sa seanse: Klijent je diskutovao profesionalne aspiracije i promene.', 66),
-(41, 'Psihoterapeut, Klijent, Kandidat', '2024-09-01', 'Beleške sa seanse: Fokus na veštinama donošenja odluka za karijerni put, uz prisustvo kandidata.', 67),
-(42, 'Psihoterapeut, Klijent', '2025-01-10', 'Beleške sa seanse: Klijent je osetio više samopouzdanja u svojim profesionalnim izborima.', 68),
-(43, 'Psihoterapeut, Klijent', '2025-03-25', 'Beleške sa seanse: Priprema za nove profesionalne izazove i intervjue.', 69);
+(40, 'Psihoterapeut', '2024-08-05', 'Beleške sa seanse: Klijent je diskutovao profesionalne aspiracije i promene.', 66),
+-- (41, 'Psihoterapeut, Kandidat', '2024-09-01', NULL, 67), -- REMOVED: objava_id 41, seansa_id 67 (No log)
+(42, 'Psihoterapeut', '2025-01-10', 'Beleške sa seanse: Klijent je osetio više samopouzdanja u svojim profesionalnim izborima.', 68),
+(43, 'Psihoterapeut', '2025-03-25', 'Beleške sa seanse: Priprema za nove profesionalne izazove i intervjue.', 69);
