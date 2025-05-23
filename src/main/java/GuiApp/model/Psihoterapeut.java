@@ -15,7 +15,7 @@ public class Psihoterapeut {
     private int fakultetID;
     private String oblastPsih;
     private String username;
-    private String lozinka;
+    private String lozinka;//
 
 
 
