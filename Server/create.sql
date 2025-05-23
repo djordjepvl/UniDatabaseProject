@@ -133,6 +133,8 @@ CREATE TABLE psihoterapeut (
     datum_sertifikacije date  NOT NULL,
     fakultet_id int  NOT NULL,
     p_oblast_id int  NOT NULL,
+    username varchar(30) NULL UNIQUE,
+    lozinka varchar(30) NULL,
     CONSTRAINT psihoterapeut_pk PRIMARY KEY (psihoterapeut_id)
 );
 

@@ -3,6 +3,8 @@ package GuiApp;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class SignUpFrame extends JFrame {
     public SignUpFrame() {
@@ -74,11 +76,11 @@ public class SignUpFrame extends JFrame {
             String username = userField.getText();
             String password = String.valueOf(passField.getPassword());
 
-            // You would insert into database here.
-            JOptionPane.showMessageDialog(this,
-                    "Account created for " + username + " (email: " + email + ")",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+            try {
+                signUp(email, username, password);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
             dispose(); // Close sign-up frame
         });
@@ -98,5 +100,25 @@ public class SignUpFrame extends JFrame {
         });
 
         add(mainPanel);
+    }
+
+    private void signUp(String email, String username, String password) throws SQLException {
+
+        try {
+            String upit = DBConnection.upit1();
+            Connection con = DBConnection.getConnection();
+
+
+            // You would insert into database here.
+            JOptionPane.showMessageDialog(this,
+                    "Account created for " + username + " (email: " + email + ")",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 }
