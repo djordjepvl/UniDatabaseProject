@@ -11,6 +11,7 @@ public class App {
     public static SignUpFrame signUp = new SignUpFrame();
 
     public static void main(String[] args) throws SQLException {
+        DBConnection.init();
         login.setVisible(true);
     }
 }

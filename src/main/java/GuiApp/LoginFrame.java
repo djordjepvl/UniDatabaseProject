@@ -81,20 +81,17 @@ public class LoginFrame extends JFrame {
         loginButton.addActionListener(e -> {
             String username = userField.getText();
             String password = new String(passField.getPassword());
-            try {
-                login(username, password);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+
+            login(username, password);
+
         });
 
         add(mainPanel);
         setVisible(true);
     }
 
-    private void login(String username, String password) throws SQLException {
-        Connection con = DBConnection.getConnection();
-        Psihoterapeut p = DBConnection.psihoterapeutUsernamePassword(con, username, password);
+    private void login(String username, String password) {
+        Psihoterapeut p = DBConnection.psihoterapeutUsernamePassword(username, password);
 
         if (p==null) {
             System.out.println("Pogresne informacije!");

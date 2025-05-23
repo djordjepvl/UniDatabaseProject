@@ -80,13 +80,8 @@ public class SignUpFrame extends JFrame {
             String username = userField.getText();
             String password = String.valueOf(passField.getPassword());
 
-            try {
-                signUp(email, username, password);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            signUp(email, username, password);
 
-            dispose(); // Close sign-up frame
         });
 
         // Log in with existing account button
@@ -106,32 +101,27 @@ public class SignUpFrame extends JFrame {
         add(mainPanel);
     }
 
-    private void signUp(String email, String username, String password) throws SQLException {
+    private void signUp(String email, String username, String password){
 
-        try {
-            Connection con = DBConnection.getConnection();
-            Psihoterapeut p = DBConnection.psihoterapeutMail(con, email);
+        Psihoterapeut p = DBConnection.psihoterapeutMail(email);
 
-            if (p == null) {
-                System.out.println("Nema psihoterapeuta sa ovom mejl adresom");
-                return;
-            }
-
-            if (p.getLozinka()!=null || p.getUsername()!=null) {
-                System.out.println("Psihoterapeut vec ima nalog!");
-                return;
-            }
-
-            p.setUsername(username);
-            p.setLozinka(password);
-
-            DBConnection.updateUser(con, p);
-
-            new MainFrame(p).setVisible(true);
-            setVisible(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (p == null) {
+            System.out.println("Nema psihoterapeuta sa ovom mejl adresom");
+            return;
         }
+
+        if (p.getLozinka()!=null || p.getUsername()!=null) {
+            System.out.println("Psihoterapeut vec ima nalog!");
+            return;
+        }
+
+        p.setUsername(username);
+        p.setLozinka(password);
+
+        DBConnection.updateUser(p);
+
+        new MainFrame(p).setVisible(true);
+        setVisible(false);
 
     }
 }

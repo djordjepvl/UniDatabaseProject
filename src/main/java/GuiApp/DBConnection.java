@@ -1,22 +1,28 @@
 package GuiApp;
 
+import model.Kandidat;
+import model.Klijent;
 import model.Psihoterapeut;
+import model.Seansa;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DBConnection {
-
+    private static Connection conn;
     private static final String DB_URL = "jdbc:mysql://localhost:3306/psihoterapija?serverTimezone=UTC";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    public static void init() throws SQLException {
+        conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 
-    public static Psihoterapeut psihoterapeutMail(Connection conn, String email) {
+    public static Psihoterapeut psihoterapeutMail(String email) {
         String sql = "SELECT * FROM psihoterapeut WHERE imejl_adresa = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
@@ -53,7 +59,7 @@ public class DBConnection {
         }
     }
 
-    public static Psihoterapeut psihoterapeutUsernamePassword(Connection conn, String username, String lozinka) {
+    public static Psihoterapeut psihoterapeutUsernamePassword(String username, String lozinka) {
         String sql = "SELECT * FROM psihoterapeut WHERE username = ? AND lozinka = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
@@ -94,7 +100,7 @@ public class DBConnection {
         }
     }
 
-    public static void updateUser(Connection con, Psihoterapeut p) {
+    public static void updateUser(Psihoterapeut p) {
         String sql = "UPDATE psihoterapeut SET " +
                 "ime = ?, " +
                 "prezime = ?, " +
@@ -110,7 +116,7 @@ public class DBConnection {
                 "lozinka = ? " +
                 "WHERE JMBG = ?";
 
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, p.getIme());
             stmt.setString(2, p.getPrezime());
             stmt.setDate(3, Date.valueOf(p.getDatumRodjenja()));
@@ -131,7 +137,7 @@ public class DBConnection {
         }
     }
 
-    public static ArrayList<Psihoterapeut> psihoterapeuti(Connection conn) {
+    public static ArrayList<Psihoterapeut> psihoterapeuti() {
         ArrayList<Psihoterapeut> lista = new ArrayList<>();
         String sql = "SELECT * FROM psihoterapeut";
 
@@ -170,5 +176,91 @@ public class DBConnection {
         }
 
         return lista;
+    }
+
+    public static ArrayList<Seansa> prethodneSeansePsihoterapeuta(Psihoterapeut psihoterapeut) {
+        ArrayList<Seansa> sessions = new ArrayList<>();
+        String sql = "SELECT * FROM seansa " +
+                "WHERE psihoterapeut_id = ? " +
+                "AND beleske IS NOT NULL " +
+                "ORDER BY pocetak DESC";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, psihoterapeut.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("seansa_id");
+                int trajanjeMinuti = rs.getInt("trajanje_minuti");
+                LocalDateTime pocetak = rs.getTimestamp("pocetak").toLocalDateTime();
+                String beleske = rs.getString("beleske");
+                int cenaSeanseDin = rs.getInt("cena_seanse_din");
+                LocalDate datumPromeneCene = null;
+                if (rs.getDate("datum_promene_cene") != null) {
+                    datumPromeneCene = rs.getDate("datum_promene_cene").toLocalDate();
+                }
+                // kandidat_id is now included regardless of null/not null
+                int kandidatId = rs.getInt("kandidat_id");
+                int klijentId = rs.getInt("klijent_id");
+                int centarId = rs.getInt("centar_id");
+
+                Seansa seansa = new Seansa(
+                        id, trajanjeMinuti, pocetak, beleske, cenaSeanseDin,
+                        datumPromeneCene, kandidatId, psihoterapeut.getId(),
+                        klijentId, centarId
+                );
+                sessions.add(seansa);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sessions;
+    }
+
+    public static ArrayList<Seansa> buduceSeansePsihoterapeuta(Psihoterapeut psihoterapeut) {
+        ArrayList<Seansa> sessions = new ArrayList<>();
+        String sql = "SELECT * FROM seansa " +
+                "WHERE psihoterapeut_id = ? " +
+                "AND beleske IS NULL " +
+                "ORDER BY pocetak ASC";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, psihoterapeut.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("seansa_id");
+                int trajanjeMinuti = rs.getInt("trajanje_minuti");
+                LocalDateTime pocetak = rs.getTimestamp("pocetak").toLocalDateTime();
+                String beleske = rs.getString("beleske"); // Will be null as per query
+                int cenaSeanseDin = rs.getInt("cena_seanse_din"); // Will be 0 if not set in DB
+                LocalDate datumPromeneCene = null;
+                if (rs.getDate("datum_promene_cene") != null) {
+                    datumPromeneCene = rs.getDate("datum_promene_cene").toLocalDate();
+                }
+                // kandidat_id is included regardless of null/not null
+                int kandidatId = rs.getInt("kandidat_id");
+                int klijentId = rs.getInt("klijent_id");
+                int centarId = rs.getInt("centar_id");
+
+                Seansa seansa = new Seansa(
+                        id, trajanjeMinuti, pocetak, beleske, cenaSeanseDin,
+                        datumPromeneCene, kandidatId, psihoterapeut.getId(),
+                        klijentId, centarId
+                );
+                sessions.add(seansa);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sessions;
+    }
+
+    public static Klijent klijentSeanse (Seansa s) {
+        return null;
+    }
+
+    public static Kandidat kandidatSeanse (Seansa s) {
+        return null;
     }
 }

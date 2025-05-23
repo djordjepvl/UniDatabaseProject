@@ -45,30 +45,21 @@ public class PsihoterapeutiFrame extends JFrame {
     }
 
     private void ucitajPodatke() {
-        try (Connection conn = DBConnection.getConnection()) {
-            ArrayList<Psihoterapeut> lista = DBConnection.psihoterapeuti(conn);
 
-            for (Psihoterapeut p : lista) {
-                Object[] rowData = {
-                        p.getIme(),
-                        p.getPrezime(),
-                        p.getJMBG(),
-                        p.getDatumRodjenja(),
-                        p.getEmail(),
-                        p.getBrojTelefona(),
-                        p.getUsername()
-                };
-                tableModel.addRow(rowData);
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Greška prilikom učitavanja psihoterapeuta:\n" + e.getMessage(),
-                    "Greška", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+        ArrayList<Psihoterapeut> lista = DBConnection.psihoterapeuti();
+        for (Psihoterapeut p : lista) {
+            Object[] rowData = {
+                    p.getIme(),
+                    p.getPrezime(),
+                    p.getJMBG(),
+                    p.getDatumRodjenja(),
+                    p.getEmail(),
+                    p.getBrojTelefona(),
+                    p.getUsername()
+            };
+            tableModel.addRow(rowData);
         }
+
     }
 
-    public static void main(String[] args) {
-        new PsihoterapeutiFrame().setVisible(true);
-    }
 }

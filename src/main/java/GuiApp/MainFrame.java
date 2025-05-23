@@ -7,10 +7,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private Psihoterapeut user;
+    private static Psihoterapeut user;
 
-    private ProfileFrame profileFrame;
-    private PsihoterapeutiFrame psihoterapeutiFrame;
+    private static ProfileFrame profileFrame;
+    private static PsihoterapeutiFrame psihoterapeutiFrame;
 
     public MainFrame(Psihoterapeut user) {
         this.user = user;
@@ -69,5 +69,9 @@ public class MainFrame extends JFrame {
         button.setForeground(Color.WHITE);
         button.setFont(new Font("SansSerif", Font.BOLD, 14));
         button.setPreferredSize(new Dimension(180, 40));
+    }
+
+    public static Psihoterapeut getUser() {
+        return user;
     }
 }
